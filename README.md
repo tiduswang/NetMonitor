@@ -1,8 +1,81 @@
 # NetMonitor - 本机应用网络连接监测工具
 
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![OS](https://img.shields.io/badge/os-Windows-0078D6.svg)](https://www.microsoft.com/windows)
+[![PySide6](https://img.shields.io/badge/UI-PySide6-green.svg)](https://doc.qt.io/qtforpython/)
+[![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+
 > 用户向的完整操作手册见 [使用文档.md](使用文档.md)；本文件面向开发者，说明技术方案与工程细节。
 
 Windows 桌面软件，实时监测并记录**本机每个应用（进程）访问了哪些 IP 地址**，支持筛选、搜索与 Excel 导出。
+
+## 快速开始
+
+```bash
+# 克隆仓库
+git clone https://github.com/tiduswang/NetMonitor.git
+cd NetMonitor
+
+# 创建虚拟环境（推荐）
+python -m venv .venv
+.venv\Scripts\activate
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 运行（建议以管理员身份）
+python main.py
+```
+
+或直接在 [GitHub Releases](https://github.com/tiduswang/NetMonitor/releases) 下载打包好的单文件 `NetMonitor.exe` 双击运行。
+
+## 发布新版本（维护者）
+
+1. 确认代码并提交：`git commit -m "chore: release v0.x.x" && git push`
+2. 本地打包：`pyinstaller --noconfirm --onefile --windowed --name NetMonitor main.py`
+3. GitHub 创建 Release：
+   ```bash
+   gh release create v0.x.x dist/NetMonitor.exe ^
+     --title "NetMonitor v0.x.x" ^
+     --notes "Release notes here"
+   ```
+4. 首次使用需登录：`gh auth login`，或使用 PAT：`$env:GH_TOKEN="ghp_xxx"; gh auth login --with-token`
+
+## 仓库结构
+
+```
+NetMonitor/
+├── main.py                    # 程序入口（QApplication 初始化）
+├── collector.py               # 采集层：ctypes + psutil 兜底 + DNS + 归属地解析
+├── storage.py                 # SQLite 存储：UPSERT 去重、组合筛选、自动清理
+├── gui.py                     # PySide6 主窗口、托盘、筛选栏、表格
+├── exporter.py                # openpyxl Excel 导出
+├── requirements.txt
+├── NetMonitor.spec            # PyInstaller 打包配置（建议入库保留）
+├── 安装开机自启.bat            # 创建任务计划（需管理员）
+├── 卸载开机自启.bat
+├── _verify_headless.py        # 无头采集验证脚本（开发辅助）
+├── _verify_tray.py            # 托盘行为验证脚本（开发辅助）
+├── .gitignore
+├── README.md                  # 本文件（开发者视角）
+├── 使用文档.md                 # 面向最终用户的完整操作手册
+└── data/                      # 运行时 SQLite 数据库目录（已在 .gitignore 中）
+```
+
+## .gitignore 说明
+
+以下内容严禁入库：
+
+| 模式 | 说明 |
+|---|---|
+| `__pycache__/`、`*.py[cod]` | Python 字节码 |
+| `build/`、`dist/`、`*.egg-info/` | PyInstaller 和 pip 构建产物 |
+| `data/*.db*`、`dist/data/` | 用户运行时生成的 SQLite 数据库 |
+| `data/*.xlsx`、`dist/*.xlsx` | 用户导出的 Excel 报表 |
+| `*.log`、`run_log.txt` | 运行日志 |
+| `.vscode/`、`.idea/` | 编辑器配置 |
+| `*.exe`、`*.zip` | 打包好的二进制（通过 GitHub Release 分发） |
+| `.env`、`.env.*` | 环境变量/密钥 |
 
 ## 功能
 
