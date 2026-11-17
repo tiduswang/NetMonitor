@@ -1,0 +1,49 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+*.egg
+
+# --- PyInstaller ---
+# .spec 文件是 PyInstaller 配置，建议入库保留；
+# 若不需要打包配置，可取消下方注释忽略它：
+# *.spec
+
+# --- 运行时数据（用户数据，严禁入库）---
+data/*.db
+data/*.db-*
+data/*.xlsx
+data/*.log
+data/*.png
+data/*.txt
+!data/.gitkeep
+
+dist/data/
+dist/*.zip
+dist/*.exe
+
+# --- 编辑器 / IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- 系统 ---
+Thumbs.db
+Desktop.ini
+.DS_Store
+ehthumbs.db
+
+# --- 环境变量 / 凭证 ---
+.env
+.env.*
+
+# --- 测试 / 调试临时产物 ---
+verify_test.db*
+verify_tray.db*
+run_log.txt
