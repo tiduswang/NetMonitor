@@ -5,7 +5,7 @@
 [![PySide6](https://img.shields.io/badge/UI-PySide6-green.svg)](https://doc.qt.io/qtforpython/)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
-> 用户向的完整操作手册见 [使用文档.md](使用文档.md)；本文件面向开发者，说明技术方案与工程细节。
+> 文档分工：[项目说明.md](项目说明.md)（中文项目概览，3 分钟了解全貌）｜[使用文档.md](使用文档.md)（用户操作手册）｜本文件（开发者技术方案与工程细节）。
 
 Windows 桌面软件，实时监测并记录**本机每个应用（进程）访问了哪些 IP 地址**，支持筛选、搜索与 Excel 导出。
 
@@ -58,6 +58,7 @@ NetMonitor/
 ├── _verify_tray.py            # 托盘行为验证脚本（开发辅助）
 ├── .gitignore
 ├── README.md                  # 本文件（开发者视角）
+├── 项目说明.md                 # 中文项目概览（面向浏览仓库的访客）
 ├── 使用文档.md                 # 面向最终用户的完整操作手册
 └── data/                      # 运行时 SQLite 数据库目录（已在 .gitignore 中）
 ```
